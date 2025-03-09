@@ -6,8 +6,8 @@ from buscas import Buscas
 
 def obter_dados_usuario():
     while True:
-        num_vertices = int(input("Número de vértices (15, 500, 5000, 10000): "))
-        while num_vertices not in {15, 500, 5000, 10000}:
+        num_vertices = int(input("Número de vértices (500, 5000, 10000): "))
+        while num_vertices not in {500, 5000, 10000}:
             print("Entrada inválida! Escolha entre 15, 500, 5000, 10000.")
             num_vertices = int(input("Número de vértices: "))
 
