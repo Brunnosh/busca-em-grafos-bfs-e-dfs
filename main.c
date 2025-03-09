@@ -69,7 +69,7 @@ void imprimirGrafo(Grafo* G) {
 }
 
 void adicionarAresta(No* origem, No* destino) {
-    origem->conexoes = (No**)realloc(origem->conexoes, (origem->qtdConexoes + 1) * sizeof(No*));
+    
     origem->conexoes[origem->qtdConexoes] = destino;
     origem->qtdConexoes++;  // Incrementa o número de conexões
 }
@@ -84,47 +84,53 @@ bool arestaExiste(No* origem, No* destino) {
 }
 
 void popularGrafo(Grafo* G, int arestasPorNo) {
+    int maxTentativas = G->qtdNode * 2;
+
     for (int i = 0; i < G->qtdNode; i++) {
-        // Aloca memória para as conexões do nó atual
-        G->listaAdj[i]->qtdConexoes = arestasPorNo;
-        
-        
+        No* origem = G->listaAdj[i];
+        int tentativas = 0;
         int conexoesFeitas = 0;
-        while (conexoesFeitas < arestasPorNo) {
-            // Gera um destino aleatório
+        
+        while (origem->qtdConexoes < arestasPorNo && tentativas < maxTentativas) {
             int destinoIndex = rand() % G->qtdNode;
-            
-            // Evita conectar o nó a si mesmo
-            if (destinoIndex != i) {
-                // Verifica se a conexão já existe
-                bool conexaoExistente = arestaExiste(G->listaAdj[i], G->listaAdj[destinoIndex]);
-                // Se a conexão não existir, cria a conexão
-                if (!conexaoExistente) {
-                    G->listaAdj[i]->conexoes[conexoesFeitas] = G->listaAdj[destinoIndex];
-                    conexoesFeitas++;
-                }
+            No* destino = G->listaAdj[destinoIndex];
+
+            // Verifica se o destino não é o próprio nó e se ambos ainda têm espaço
+            if (destinoIndex != i && 
+                origem->qtdConexoes < arestasPorNo && 
+                destino->qtdConexoes < arestasPorNo && 
+                !arestaExiste(origem, destino)) {
+                
+                // Conectar ambos os nós bidirecionalmente
+                adicionarAresta(origem, destino);
+                adicionarAresta(destino, origem);
+                conexoesFeitas++;
             }
+            tentativas++;
+        }
+
+        for(int j = conexoesFeitas; j<arestasPorNo; j++){
+            origem->conexoes[j] == NULL;
         }
     }
 }
 
 
 
+
 int main(){
+    srand(time(NULL));
     int numVertices, edgesPerNode;
     Grafo *G;
     userInput(&numVertices, &edgesPerNode);
 
     G = criarGrafo(numVertices, edgesPerNode);
 
-    //adicionarAresta(G->listaAdj[0],G->listaAdj[1]);
-    srand(time(NULL));
+
     popularGrafo(G, edgesPerNode);
 
     imprimirGrafo(G);
 
-    printf("%d", numVertices);
-    printf("%d", edgesPerNode);
 
 
 
