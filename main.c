@@ -120,7 +120,7 @@ void popularGrafo(Grafo* G, int arestasPorNo) {
 
 int main(){
     srand(time(NULL));
-    int numVertices, edgesPerNode;
+    int numVertices, edgesPerNode, verticeObjetivo;
     Grafo *G;
     userInput(&numVertices, &edgesPerNode);
 
@@ -131,7 +131,7 @@ int main(){
 
     imprimirGrafo(G);
 
-
+    verticeObjetivo= rand() % numVertices;
 
 
 
