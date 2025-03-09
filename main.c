@@ -19,12 +19,12 @@ void userInput(int* numVertices, int* edgesPerNode) {
     bool flag = true;
 
     while (flag) {
-        printf("Número de vértices (500, 5000, 10000): ");
+        printf("Número de vértices (5, 500, 5000, 10000): ");
         scanf("%d", numVertices);
         printf("Número de arestas por nó (3, 5, 7): ");
         scanf("%d", edgesPerNode);
 
-        if ((*numVertices != 500 && *numVertices != 5000 && *numVertices != 10000) ||
+        if ((*numVertices != 5 && *numVertices != 500 && *numVertices != 5000 && *numVertices != 10000) ||
             (*edgesPerNode != 3 && *edgesPerNode != 5 && *edgesPerNode != 7)) {
             printf("Entrada inválida! Use valores permitidos.\n");
         } else {
@@ -33,16 +33,16 @@ void userInput(int* numVertices, int* edgesPerNode) {
     }
 }
 
-struct No * criarNo(int numeroNo){
+struct No * criarNo(int numeroNo, int maxArestas){
     No* no = (No*)malloc(sizeof(No));
     no ->numNo = numeroNo;
     no->qtdConexoes = 0; //inicia com zero conexões
-    no->conexoes = NULL; //Array com ponteiros de outros nós iniciado vazio
+    no->conexoes = (No**)malloc(maxArestas * sizeof(No*));; //Array com ponteiros de outros nós iniciado vazio
     return no;
 
 }
 
-struct Grafo * criarGrafo(int V){
+struct Grafo * criarGrafo(int V, int maxArestas){
     //Aloca memória da struct grafo
     struct Grafo* G = (struct Grafo*)malloc(sizeof(struct Grafo));
     G->qtdNode = V;
@@ -51,7 +51,7 @@ struct Grafo * criarGrafo(int V){
     G->listaAdj = (struct No**)malloc(V*sizeof(struct No*));
 
     for (int i = 0; i < V; i++) {
-        G->listaAdj[i] = criarNo(i);
+        G->listaAdj[i] = criarNo(i, maxArestas);
     }
     return G;
 
@@ -87,7 +87,7 @@ void popularGrafo(Grafo* G, int arestasPorNo) {
     for (int i = 0; i < G->qtdNode; i++) {
         // Aloca memória para as conexões do nó atual
         G->listaAdj[i]->qtdConexoes = arestasPorNo;
-        G->listaAdj[i]->conexoes = (No**)malloc(arestasPorNo * sizeof(No*));
+        
         
         int conexoesFeitas = 0;
         while (conexoesFeitas < arestasPorNo) {
@@ -115,7 +115,7 @@ int main(){
     Grafo *G;
     userInput(&numVertices, &edgesPerNode);
 
-    G = criarGrafo(numVertices);
+    G = criarGrafo(numVertices, edgesPerNode);
 
     //adicionarAresta(G->listaAdj[0],G->listaAdj[1]);
     srand(time(NULL));
