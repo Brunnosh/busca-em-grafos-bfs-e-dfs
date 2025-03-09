@@ -47,30 +47,27 @@ def executar():
 
         # Busca em Largura
         print("\nExecutando a Busca em Largura...")
-        caminho_bfs, dist_bfs, tempo_execucao = buscas.busca_em_largura(inicio, fim)
+        caminho_bfs, dist_bfs, tempo_execucao_bfs = buscas.busca_em_largura(inicio, fim)
         print(f"Distância: {dist_bfs}")
         print(f"Tamanho do caminho (BFS): {len(caminho_bfs)}")
-        print(f"Tempo de execução da Busca em Largura: {tempo_execucao:.6f} segundos")
+        print(f"Tempo de execução da Busca em Largura: {tempo_execucao_bfs:.6f} segundos")
         print(f"Caminho da Busca em Largura: {caminho_bfs}")
 
         # Busca em Profundidade
         print("\nExecutando a Busca em Profundidade...")
-        dfs_time_start = time.time()
-        caminho_dfs = buscas.busca_em_profundidade(inicio, fim)
-        dfs_time_end = time.time()
-        print(f"Caminho da Busca em Profundidade: {caminho_dfs}")
-        print(f"Tempo de execução da Busca em Profundidade: {dfs_time_end - dfs_time_start:.6f} segundos")
+        caminho_dfs, tempo_execucao_dfs = buscas.busca_em_profundidade(inicio, fim)
         print(f"Tamanho do caminho (DFS): {len(caminho_dfs)}")
+        print(f"Tempo de execução da Busca em Profundidade: {tempo_execucao_dfs:.6f} segundos")
+        print(f"Caminho da Busca em Profundidade: {caminho_dfs}")
 
         # Busca em Profundidade Limitada
-        # limite = 3
-        # print(f"\nExecutando a Busca em Profundidade Limitada com limite {limite}...")
-        # start_time = time.time()
-        # caminho_dfs_limitada = buscas.busca_em_profundidade_limitada(inicio, fim, limite)
-        # dfs_limitada_time = time.time() - start_time
-        # print(f"Caminho da Busca em Profundidade Limitada: {caminho_dfs_limitada}")
-        # print(f"Tempo de execução da Busca em Profundidade Limitada: {dfs_limitada_time:.6f} segundos")
-        # print(f"Tamanho do caminho (DFS Limitada): {len(caminho_dfs_limitada)}")
+        limite = 3
+        print(f"\nExecutando a Busca em Profundidade Limitada")
+        print(f"Limite: {limite}")
+        caminho_dfs_limitada, tempo_execucao_dfs_limitada = buscas.busca_em_profundidade_limitada(inicio, fim, limite)
+        print(f"Tamanho do caminho (DFS Limitada): {len(caminho_dfs_limitada)}")
+        print(f"Tempo de execução da Busca em Profundidade Limitada: {tempo_execucao_dfs_limitada:.6f} segundos")
+        print(f"Caminho da Busca em Profundidade Limitada: {caminho_dfs_limitada}")
 
         visualizador = VisualizarGrafo(grafo, inicio, fim)
         print("\nDesenhando o grafo...")

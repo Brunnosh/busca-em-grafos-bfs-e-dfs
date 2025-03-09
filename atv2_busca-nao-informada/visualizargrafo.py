@@ -3,12 +3,18 @@ import webbrowser
 from pyvis.network import Network
 
 class VisualizarGrafo:
+    LIMITE_NOS = 500
+
     def __init__(self, grafo, inicio=None, fim=None):
         self.grafo = grafo
         self.inicio = inicio
         self.fim = fim
 
     def desenhar_grafo(self, nome_arquivo="grafo/grafo.html"):
+        if len(self.grafo.conexoes) > self.LIMITE_NOS:
+            print("A visualização não será gerada, pois excede o limite de {self.LIMITE_NOS}")
+            return
+
         if not os.path.exists("grafo"):
             os.makedirs("grafo")
 

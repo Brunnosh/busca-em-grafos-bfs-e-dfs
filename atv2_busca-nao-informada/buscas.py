@@ -41,6 +41,7 @@ class Buscas:
         visitados = {v: False for v in self.grafo.conexoes}
         caminho = []
 
+        inicio_tempo = time.perf_counter()
         def _dfs(v):
             if visitados[v]:
                 return False
@@ -51,17 +52,19 @@ class Buscas:
             for vizinho in self.grafo.conexoes[v]:
                 if _dfs(vizinho):
                     return True
-            caminho.pop()
             return False
 
         _dfs(inicio)
-        return caminho
+
+        tempo_execucao = time.perf_counter() - inicio_tempo
+        return caminho, tempo_execucao
 
     # Busca em Profundidade Limitada
     def busca_em_profundidade_limitada(self, inicio, objetivo, limite):
         visitados = {v: False for v in self.grafo.conexoes}
         caminho = []
 
+        inicio_tempo = time.perf_counter()
         def _dfs(v, profundidade):
             if profundidade > limite:
                 return False
@@ -74,8 +77,9 @@ class Buscas:
             for vizinho in self.grafo.conexoes[v]:
                 if _dfs(vizinho, profundidade + 1):
                     return True
-            caminho.pop()
             return False
 
         _dfs(inicio, 0)
-        return caminho
+        tempo_execucao = time.perf_counter() - inicio_tempo
+        
+        return caminho, tempo_execucao
