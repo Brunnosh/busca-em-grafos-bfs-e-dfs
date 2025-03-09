@@ -1,5 +1,4 @@
 import random
-import time
 from grafo import Grafo
 from visualizargrafo import VisualizarGrafo
 from buscas import Buscas
