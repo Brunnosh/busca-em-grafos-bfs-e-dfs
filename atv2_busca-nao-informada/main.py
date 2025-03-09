@@ -47,13 +47,11 @@ def executar():
 
         # Busca em Largura
         print("\nExecutando a Busca em Largura...")
-        bfs_time_start = time.time()
-        caminho_bfs, dist_bfs = buscas.busca_em_largura(inicio, fim)
-        bfs_time_end = time.time()
-        print(f"Caminho da Busca em Largura: {caminho_bfs}")
+        caminho_bfs, dist_bfs, tempo_execucao = buscas.busca_em_largura(inicio, fim)
         print(f"Distância: {dist_bfs}")
-        print(f"Tempo de execução da Busca em Largura: {bfs_time_end - bfs_time_start:.6f} segundos")
         print(f"Tamanho do caminho (BFS): {len(caminho_bfs)}")
+        print(f"Tempo de execução da Busca em Largura: {tempo_execucao:.6f} segundos")
+        print(f"Caminho da Busca em Largura: {caminho_bfs}")
 
         # Busca em Profundidade
         print("\nExecutando a Busca em Profundidade...")

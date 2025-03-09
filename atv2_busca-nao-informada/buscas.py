@@ -1,3 +1,4 @@
+import time
 from collections import deque
 
 class Buscas:
@@ -9,29 +10,31 @@ class Buscas:
         visitados = {v: False for v in self.grafo.conexoes}
         distancia = {v: float('inf') for v in self.grafo.conexoes}
         anterior = {v: None for v in self.grafo.conexoes}
+
+        caminho = [] 
+
         fila = deque([inicio])
         visitados[inicio] = True
         distancia[inicio] = 0
 
+        inicio_tempo = time.time()
         while fila:
             atual = fila.popleft()
+            caminho.append(atual)
+
             if atual == objetivo:
                 break
-            for vizinho in sorted(self.grafo.conexoes[atual]):
+
+            for vizinho in self.grafo.conexoes[atual]:
                 if not visitados[vizinho]:
                     visitados[vizinho] = True
                     distancia[vizinho] = distancia[atual] + 1
                     anterior[vizinho] = atual
                     fila.append(vizinho)
 
-        # Reconstruir o caminho
-        caminho = []
-        atual = objetivo
-        while atual is not None:
-            caminho.append(atual)
-            atual = anterior[atual]
-        caminho.reverse()
-        return caminho, distancia[objetivo]
+        tempo_execucao = time.time() - inicio_tempo
+
+        return caminho, distancia[objetivo], tempo_execucao
     
     # Busca em Profundidade
     def busca_em_profundidade(self, inicio, objetivo):
