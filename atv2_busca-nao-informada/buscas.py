@@ -17,7 +17,7 @@ class Buscas:
         visitados[inicio] = True
         distancia[inicio] = 0
 
-        inicio_tempo = time.time()
+        inicio_tempo = time.perf_counter()
         while fila:
             atual = fila.popleft()
             caminho.append(atual)
@@ -32,7 +32,7 @@ class Buscas:
                     anterior[vizinho] = atual
                     fila.append(vizinho)
 
-        tempo_execucao = time.time() - inicio_tempo
+        tempo_execucao = time.perf_counter() - inicio_tempo
 
         return caminho, distancia[objetivo], tempo_execucao
     
